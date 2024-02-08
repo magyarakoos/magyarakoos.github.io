@@ -25,12 +25,25 @@
             color: #333;
         }
 
-        #frame {
+       #frame {
             margin-top: 20px;
-            border: 10px solid rgb(198, 198, 198);
             border-radius: 10px;
-            background-color: #fff;
+			max-height: 800px;
+			max-width: 800px;
+			width: 100vw;
+			height: 100vw;
         }
+		
+		@media only screen and (max-width: 768px){
+			
+			#frame {
+			padding: 5px;
+			max-height: 800px;
+			max-width: 800px;
+			width: calc(100vw - 10px);
+			height: calc(100vw - 5px);
+			}
+		}
     </style>
 </head>
 <body>
