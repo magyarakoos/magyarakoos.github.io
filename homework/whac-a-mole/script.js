@@ -1,6 +1,77 @@
 const boxSize = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--box-size")); // px
 const boxGap = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--box-gap")); // px
 
+let data = {
+    score: 0,
+    timer: 0,
+    lastTime: 0,
+    mole: undefined
+};
+
+window.addEventListener("load", load);
+window.addEventListener("resize", load);
+setInterval(updateData, 20);
+
+function load() {
+    data.score = 0;
+    data.timer = 0;
+    setBoxCount();
+
+    relocateMole();
+}
+
+function relocateMole() {
+    if (data.mole !== undefined) {
+        data.mole.classList.remove("marked");
+    }
+
+    const board = document.querySelector("#board");
+
+    // ensure we never get the same box twice
+    while (true) {
+        const newMole = board.children[Math.floor(Math.random() * board.children.length)];
+        if (data.mole !== newMole) {
+            data.mole = newMole;
+            break;
+        }
+    }
+
+    data.mole.classList.add("marked");
+}
+
+function createBox() {
+    const box = document.createElement("div");
+    box.classList.add("box");
+    box.addEventListener("click", function() {
+        this.classList.add("active");
+
+        if (this.classList.contains("marked")) {
+            setTimeout(() => this.classList.remove("active"), 150);
+
+            data.score++;
+            data.lastTime = data.timer;
+            setTimeout(relocateMole, 150);
+        } else {
+            setTimeout(() => {
+                this.classList.remove("active");
+                load();
+            }, 1000);
+        }
+    });
+    return box;
+}
+
+function updateData() {
+    if (data.score > 0) {
+        data.timer += 2;
+    }
+
+    document.querySelector("#score").innerHTML = data.score;
+    document.querySelector("#timer").innerHTML = data.timer;
+
+    document.querySelector("#dt").innerHTML = data.score === 0 ? 0 : Math.round(data.lastTime / data.score);
+}
+
 function setBoxCount() {
     const main = document.querySelector("main");
     const board = document.querySelector("#board");
@@ -13,11 +84,7 @@ function setBoxCount() {
     const rowCount = Math.floor((main.clientHeight - boxGap) / (boxSize + boxGap));
 
     for (let i = 0; i < rowCount * columnCount; i++) {
-        const box = document.createElement("div");
-        box.setAttribute("class", "box");
-        board.appendChild(box);
+        board.appendChild(createBox());
     }
 }
 
-window.addEventListener("load", setBoxCount);
-window.addEventListener("resize", setBoxCount);
