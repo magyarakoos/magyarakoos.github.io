@@ -18,6 +18,7 @@
 
 html,
 body {
+    zoom: 100%;
     font-family: "PT Serif", serif;
     height: 100%;
 }
