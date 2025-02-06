@@ -15,25 +15,33 @@ setInterval(updateData, 20);
 function load() {
     data.score = 0;
     data.timer = 0;
-    setBoxCount();
 
+    setBoxCount();
     relocateMole();
 }
 
-function relocateMole() {
-    if (data.mole !== undefined) {
-        data.mole.classList.remove("marked");
-    }
+function selectRandomBox(board) {
+    return board.children[Math.floor(Math.random() * board.children.length)]
+}
 
+function relocateMole() {
     const board = document.querySelector("#board");
 
-    // ensure we never get the same box twice
-    while (true) {
-        const newMole = board.children[Math.floor(Math.random() * board.children.length)];
-        if (data.mole !== newMole) {
-            data.mole = newMole;
-            break;
+    if (board.children.length === 0) return;
+
+    if (data.mole !== undefined) {
+        data.mole.classList.remove("marked");
+
+        // ensure we never get the same box twice
+        while (true) {
+            const newMole = selectRandomBox(board);
+            if (data.mole !== newMole) {
+                data.mole = newMole;
+                break;
+            }
         }
+    } else {
+        data.mole = selectRandomBox(board);
     }
 
     data.mole.classList.add("marked");
@@ -73,15 +81,17 @@ function updateData() {
 }
 
 function setBoxCount() {
+    //if (main.clientHeight < boxSize * boxGap * 2) return;
+
     const main = document.querySelector("main");
     const board = document.querySelector("#board");
 
     board.innerHTML = "";
 
+    const rowCount = Math.floor((main.clientHeight - boxGap) / (boxSize + boxGap));
+
     const computedStyle = window.getComputedStyle(board);
     const columnCount = computedStyle.getPropertyValue("grid-template-columns").split(" ").length;
-
-    const rowCount = Math.floor((main.clientHeight - boxGap) / (boxSize + boxGap));
 
     for (let i = 0; i < rowCount * columnCount; i++) {
         board.appendChild(createBox());
