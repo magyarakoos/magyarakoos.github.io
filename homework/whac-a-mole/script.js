@@ -15,7 +15,6 @@ setInterval(updateData, 20);
 function load() {
     data.score = 0;
     data.timer = 0;
-
     setBoxCount();
     relocateMole();
 }
@@ -81,17 +80,15 @@ function updateData() {
 }
 
 function setBoxCount() {
-    //if (main.clientHeight < boxSize * boxGap * 2) return;
-
     const main = document.querySelector("main");
     const board = document.querySelector("#board");
 
     board.innerHTML = "";
 
-    const rowCount = Math.floor((main.clientHeight - boxGap) / (boxSize + boxGap));
-
     const computedStyle = window.getComputedStyle(board);
     const columnCount = computedStyle.getPropertyValue("grid-template-columns").split(" ").length;
+
+    const rowCount = Math.floor((main.clientHeight - boxGap) / (boxSize + boxGap));
 
     for (let i = 0; i < rowCount * columnCount; i++) {
         board.appendChild(createBox());
