@@ -1,0 +1,117 @@
+@import url('https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+:root {
+    --charcoal: #2E5266;
+    --gunmetal: #192D38;
+    --french-gray: #C7CEDB;
+    --poppy: #DF2935;
+    --spring-green: #1CFF8A;
+
+    --box-size: 60px;
+    --box-gap: 8px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    /*zoom: 100%;*/
+    font-family: "PT Serif", serif;
+    height: 100%;
+}
+
+body {
+    color: var(--french-gray);
+    display: flex;
+    flex-direction: column;
+    user-select: none;
+}
+
+header {
+    background-color: var(--gunmetal);
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+header h1 {
+    text-align: center;
+    padding: 10px;
+}
+
+header section {
+    padding: 10px;
+    margin: 0 auto;
+}
+
+header section label,
+header section p {
+    display: inline-block;
+}
+
+header section label {
+    width: 120px;
+}
+
+header section p {
+    width: 80px;
+    text-align: right;
+}
+
+main {
+    background-color: var(--charcoal);
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#board {
+    padding: var(--box-gap);
+    display: inline-grid;
+    justify-content: center;
+    gap: var(--box-gap);
+    grid-template-rows: repeat(6, 1fr);
+    grid-template-columns: repeat(6, 1fr);
+}
+
+.box {
+    background-color: var(--gunmetal);
+    color: var(--gunmetal);
+    width: var(--box-size);
+    height: var(--box-size);
+    transition-duration: 0.25s;
+    border-radius: 10%;
+    text-align: center;
+    line-height: var(--box-size);
+    font-size: 26px;
+}
+
+.box span {
+    display: inline-block;
+    transform: scaleX(-1);
+}
+
+.box:hover {
+    filter: brightness(1.5);
+    transform: scale(0.9);
+}
+
+.box.active {
+    color: var(--french-gray);
+    transform: rotateY(180deg);
+    filter: brightness(1.5);
+}
+
+box.finished {
+    color: var(--poppy);
+}
+
+footer {
+    background-color: var(--gunmetal);
+    text-align: center;
+    padding: 10px;
+}
