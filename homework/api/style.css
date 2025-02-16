@@ -4,35 +4,40 @@
     box-sizing: border-box;
 }
 
-body, html {
-    height: 100vh;
+html,
+body {
+    height: 100%;
+}
+
+body {
+    background-color: #242430;
 }
 
 main {
-    height: 100%;
-    padding: 50px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #242430;
-    overflow: hidden;
+    height: 100vh;
+    padding: 20px;
 }
 
-img {
-    max-height: 80%;
-    max-width: 100%;
-    border: 5px solid black;
-    border-radius: 10px;
-    background-color: #EEE;
+main img {
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
 }
 
 #button {
-    width: 90px;
-    transition-duration: 0.25s;
-    border-radius: 10px;
+    margin-top: auto;
+    align-self: center;
+    transition-duration: 0.2s;
 }
 
 #button:hover {
     transform: scale(0.9);
+}
+
+#button svg {
+    width: 150px;
 }
